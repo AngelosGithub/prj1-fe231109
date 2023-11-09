@@ -14,10 +14,12 @@ export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [writer, setWriter] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const toast = useToast();
 
   function handleSubmit() {
+    setIsSubmitting(true);
     axios
       .post("/api/board/add", {
         title,
@@ -30,13 +32,22 @@ export function BoardWrite() {
           status: "success",
         });
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error.response.status);
+
+        if (error.response.status === 400) {
+          toast({
+            description: "작성한 내용을 확인 해주세요",
+            status: "error",
+          });
+        }
+
         toast({
           description: "저장중에 문제가 발생 하였습니다",
           status: "error",
         });
       })
-      .finally(() => console.log("끝"));
+      .finally(() => setIsSubmitting(false));
   }
 
   return (
@@ -61,7 +72,11 @@ export function BoardWrite() {
             onChange={(e) => setWriter(e.target.value)}
           ></Textarea>
         </FormControl>
-        <Button onClick={handleSubmit} colorScheme="blue">
+        <Button
+          isDisabled={isSubmitting}
+          onClick={handleSubmit}
+          colorScheme="blue"
+        >
           저장
         </Button>
       </Box>

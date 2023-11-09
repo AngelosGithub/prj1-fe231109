@@ -43,12 +43,12 @@ export function BoardWrite() {
             description: "작성한 내용을 확인 해주세요",
             status: "error",
           });
+        } else {
+          toast({
+            description: "저장중에 문제가 발생 하였습니다",
+            status: "error",
+          });
         }
-
-        toast({
-          description: "저장중에 문제가 발생 하였습니다",
-          status: "error",
-        });
       })
       .finally(() => setIsSubmitting(false));
   }

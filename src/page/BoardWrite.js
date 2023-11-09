@@ -70,10 +70,10 @@ export function BoardWrite() {
         </FormControl>
         <FormControl>
           <FormLabel>작성자</FormLabel>
-          <Textarea
+          <Input
             value={writer}
             onChange={(e) => setWriter(e.target.value)}
-          ></Textarea>
+          ></Input>
         </FormControl>
         <Button
           isDisabled={isSubmitting}

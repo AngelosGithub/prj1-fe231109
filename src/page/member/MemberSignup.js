@@ -44,6 +44,7 @@ export function MemberSignup() {
       .then(() => {
         // toast
         // navigate
+        navigate("/");
       })
       .catch(() => {
         // toast

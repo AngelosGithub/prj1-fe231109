@@ -6,6 +6,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
@@ -17,6 +18,8 @@ export function MemberSignup() {
   const [email, setEmail] = useState("");
 
   const [idAvailable, setIdAvailable] = useState(false);
+
+  const toast = useToast();
 
   let submitAvailable = true;
 
@@ -38,9 +41,13 @@ export function MemberSignup() {
         password,
         email,
       })
-      .then(() => console.log("good"))
-      .catch(() => console.log("bad"))
-      .finally(() => console.log("done"));
+      .then(() => {
+        // toast
+        // navigate
+      })
+      .catch(() => {
+        // toast
+      });
   }
 
   function handleIdCheck() {
@@ -51,10 +58,18 @@ export function MemberSignup() {
       .get("/api/member/check?" + searchParam.toString())
       .then(() => {
         setIdAvailable(false);
+        toast({
+          description: "이미 사용중인 ID입니다",
+          status: "warning",
+        });
       })
       .catch((error) => {
         if (error.response.status === 404) {
           setIdAvailable(true);
+          toast({
+            description: "사용 가능합니다",
+            status: "success",
+          });
         }
       });
   }

@@ -1,12 +1,25 @@
 import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { Form } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 export function MemberSignup() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [email, setEmail] = useState("");
+
+  function handleSubmit() {
+    axios
+      .post("/api/member/signup", {
+        id,
+        password,
+        email,
+      })
+      .then(() => console.log("good"))
+      .catch(() => console.log("bad"))
+      .finally(() => console.log("done"));
+  }
 
   return (
     <Box>
@@ -39,7 +52,9 @@ export function MemberSignup() {
           onChange={(e) => setEmail(e.target.value)}
         />
       </FormControl>
-      <Button>가입</Button>
+      <Button onClick={handleSubmit} colorScheme="blue">
+        가입
+      </Button>
     </Box>
   );
 }

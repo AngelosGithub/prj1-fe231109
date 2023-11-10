@@ -21,6 +21,7 @@ const routes = createBrowserRouter(
       <Route path="board/:id" element={<BoardView />} />
       <Route path="edit/:id" element={<BoardEdit />} />
       <Route path="signup" element={<MemberSignup />} />
+      <Route path="member/list" element={<MemberList />} />
     </Route>,
   ),
 );

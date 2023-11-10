@@ -48,6 +48,16 @@ export function BoardEdit() {
     });
   };
 
+  function handleSubmitClick() {
+    // 저장버튼 클릭시
+    // PUT /api/board/edit
+    axios
+      .put("/api/board/edit", board)
+      .then(() => console.log("good"))
+      .catch(() => console.log("bad"))
+      .finally(() => console.log("end"));
+  }
+
   return (
     <Box>
       <h1>{id} 번 글 수정</h1>
@@ -84,8 +94,10 @@ export function BoardEdit() {
           }}
         />
       </FormControl>
-      <Button colorScheme="blue">저장</Button>
-      {/* 이전 경로로 가기 */}
+      <Button colorScheme="blue" onClick={handleSubmitClick}>
+        저장
+      </Button>
+      {/* navigate(-1) 이전 경로로 가기 */}
       <Button onClick={() => navigate(-1)}>취소</Button>
     </Box>
   );

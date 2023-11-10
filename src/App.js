@@ -10,6 +10,7 @@ import { BoardList } from "./page/BoardList";
 import { HomeLayout } from "./layout/HomeLayout";
 import { BoardView } from "./page/BoardView";
 import { BoardEdit } from "./page/BoardEdit";
+import { MemberSignup } from "./page/member/MemberSignup";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ const routes = createBrowserRouter(
       <Route path="write" element={<BoardWrite />} />
       <Route path="board/:id" element={<BoardView />} />
       <Route path="edit/:id" element={<BoardEdit />} />
+      <Route path="signup" element={<MemberSignup />} />
     </Route>,
   ),
 );

@@ -56,7 +56,19 @@ export function BoardEdit() {
         });
         navigate("/board/" + id);
       })
-      .catch(() => console.log("bad"))
+      .catch((error) => {
+        if (error.response.status === 400) {
+          toast({
+            description: "잘못된 요청입니다",
+            status: "error",
+          });
+        } else {
+          toast({
+            description: "수정중에 문제가 발생했습니다",
+            status: "error",
+          });
+        }
+      })
       .finally(() => console.log("end"));
   }
 

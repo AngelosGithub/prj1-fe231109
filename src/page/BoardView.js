@@ -77,7 +77,9 @@ export function BoardView() {
         <FormLabel>작성일자</FormLabel>
         <Input value={board.inserted} readOnly />
       </FormControl>
-      <Button colorScheme="green">수정</Button>
+      <Button colorScheme="green" onClick={() => navigate()}>
+        수정
+      </Button>
       <Button colorScheme="red" onClick={onOpen}>
         삭제
       </Button>

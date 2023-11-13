@@ -40,6 +40,7 @@ export function MemberEdit() {
     axios.get("/api/member?" + params.toString()).then((response) => {
       setMember(response.data);
       setEmail(response.data.email);
+      setNickName(response.data.nickName);
     });
   }, []);
 
@@ -129,7 +130,7 @@ export function MemberEdit() {
     // {id, password, email}
 
     axios
-      .put("/api/member/edit", { id: member.id, password, email })
+      .put("/api/member/edit", { id: member.id, password, email, nickName })
       .then(() => {
         toast({
           description: "회원정보가 수정되었습니다",
@@ -180,7 +181,7 @@ export function MemberEdit() {
         <FormLabel>NickName</FormLabel>
         <Flex>
           <Input
-            type="nickName"
+            type="text"
             value={nickName}
             onChange={(e) => {
               setNickName(e.target.value);

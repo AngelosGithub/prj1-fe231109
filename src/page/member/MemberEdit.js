@@ -41,10 +41,11 @@ export function MemberEdit() {
 
   // TODO 기존 이메이일과 같거나 중복확인을 했거나
   let emailChecked = sameOriginEmail || emailAvailable;
+
   // 암호가 없으면 기존, 암호를 작성하면 암호 확인 체크
   let passwordChecked = false;
 
-  if (passwordChecked === password) {
+  if (passwordCheck === password) {
     passwordChecked = true;
   }
 

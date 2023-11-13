@@ -17,6 +17,7 @@ export function MemberSignup() {
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [email, setEmail] = useState("");
+  const [nickName, setNickName] = useState("");
 
   const [idAvailable, setIdAvailable] = useState(false);
 
@@ -126,6 +127,14 @@ export function MemberSignup() {
           onChange={(e) => setPasswordCheck(e.target.value)}
         />
         <FormErrorMessage>암호가 다릅니다</FormErrorMessage>
+      </FormControl>
+      <FormControl>
+        <FormLabel>NickName</FormLabel>
+        <Input
+          type="nickName"
+          value={nickName}
+          onChange={(e) => setNickName(e.target.value)}
+        />
       </FormControl>
       <FormControl>
         <FormLabel>email</FormLabel>

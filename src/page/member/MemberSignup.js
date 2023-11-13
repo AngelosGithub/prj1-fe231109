@@ -187,7 +187,7 @@ export function MemberSignup() {
         />
         <FormErrorMessage>암호가 다릅니다</FormErrorMessage>
       </FormControl>
-      <FormControl>
+      <FormControl isInvalid={!idAvailable}>
         <FormLabel>NickName</FormLabel>
         <Flex>
           <Input
@@ -198,7 +198,7 @@ export function MemberSignup() {
           <Button onClick={handleNickNameCheck}>중복확인</Button>
         </Flex>
       </FormControl>
-      <FormControl>
+      <FormControl isInvalid={!idAvailable}>
         <FormLabel>email</FormLabel>
         <Flex>
           <Input

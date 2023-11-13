@@ -211,7 +211,7 @@ export function MemberEdit() {
         </Flex>
       </FormControl>
       <Button
-        isDisabled={!emailChecked || !passwordChecked}
+        isDisabled={!emailChecked || !passwordChecked || !nickNameChecked}
         colorScheme="green"
         onClick={onOpen}
       >

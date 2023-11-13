@@ -38,8 +38,8 @@ export function MemberList() {
         <Thead>
           <Tr>
             <Th>id</Th>
-            <Th>password</Th>
             <Th>NickName</Th>
+            <Th>password</Th>
             <Th>email</Th>
             <Th>가입 일시</Th>
           </Tr>

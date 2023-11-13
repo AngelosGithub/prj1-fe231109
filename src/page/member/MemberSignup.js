@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function MemberSignup() {
   const [id, setId] = useState("");
@@ -20,6 +20,8 @@ export function MemberSignup() {
   const [nickName, setNickName] = useState("");
 
   const [idAvailable, setIdAvailable] = useState(false);
+  const [emailAvailable, setEmailAvailable] = useState(false);
+  const [nickNameAvailable, setNickNameAvailable] = useState(false);
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -27,6 +29,14 @@ export function MemberSignup() {
   let submitAvailable = true;
 
   if (!idAvailable) {
+    submitAvailable = false;
+  }
+
+  if (!emailAvailable) {
+    submitAvailable = false;
+  }
+
+  if (!nickNameAvailable) {
     submitAvailable = false;
   }
 
@@ -42,6 +52,7 @@ export function MemberSignup() {
       .post("/api/member/signup", {
         id,
         password,
+        nickName,
         email,
       })
       .then(() => {
@@ -93,6 +104,54 @@ export function MemberSignup() {
       });
   }
 
+  function handleEmailCheck() {
+    const params = new URLSearchParams();
+    params.set("email", email);
+
+    axios
+      .get("/api/member/check?" + params)
+      .then(() => {
+        setEmailAvailable(false);
+        toast({
+          description: "이미 사용 중인 email입니다.",
+          status: "warning",
+        });
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          setEmailAvailable(true);
+          toast({
+            description: "사용 가능한 email입니다.",
+            status: "success",
+          });
+        }
+      });
+  }
+
+  function handleNickNameCheck() {
+    const searchParam = new URLSearchParams();
+    searchParam.set("nickName", nickName);
+
+    axios
+      .get("/api/member/check?" + searchParam.toString())
+      .then(() => {
+        setNickNameAvailable(false);
+        toast({
+          description: "중복된 닉네임입니다",
+          status: "warning",
+        });
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          setNickNameAvailable(true);
+          toast({
+            description: "사용 가능한 닉네임입니다",
+            status: "success",
+          });
+        }
+      });
+  }
+
   return (
     <Box>
       <h1>회원 가입</h1>
@@ -130,20 +189,27 @@ export function MemberSignup() {
       </FormControl>
       <FormControl>
         <FormLabel>NickName</FormLabel>
-        <Input
-          type="nickName"
-          value={nickName}
-          onChange={(e) => setNickName(e.target.value)}
-        />
+        <Flex>
+          <Input
+            type="nickName"
+            value={nickName}
+            onChange={(e) => setNickName(e.target.value)}
+          />
+          <Button onClick={handleNickNameCheck}>중복확인</Button>
+        </Flex>
       </FormControl>
       <FormControl>
         <FormLabel>email</FormLabel>
-        <Input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <Flex>
+          <Input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Button onClick={handleEmailCheck}>중복확인</Button>
+        </Flex>
       </FormControl>
+      <br />
       <Button
         isDisabled={!submitAvailable}
         onClick={handleSubmit}

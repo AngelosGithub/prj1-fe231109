@@ -38,8 +38,10 @@ export function MemberList() {
         <Thead>
           <Tr>
             <Th>id</Th>
-            <Th>pw</Th>
+            <Th>password</Th>
+            <Th>NickName</Th>
             <Th>email</Th>
+            <Th>가입 일시</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -50,6 +52,7 @@ export function MemberList() {
               key={member.id}
             >
               <Td>{member.id}</Td>
+              <Td>{member.nickName}</Td>
               <Td>{member.password}</Td>
               <Td>{member.email}</Td>
               <Td>{member.inserted}</Td>

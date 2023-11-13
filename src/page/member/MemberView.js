@@ -77,12 +77,12 @@ export function MemberView() {
       <h1>{member.id}님 정보</h1>
 
       <FormControl>
-        <FormLabel>NickName</FormLabel>
-        <Input type="text" value={member.nickName} readOnly />
-      </FormControl>
-      <FormControl>
         <FormLabel>password</FormLabel>
         <Input type="text" value={member.password} readOnly />
+      </FormControl>
+      <FormControl>
+        <FormLabel>NickName</FormLabel>
+        <Input type="text" value={member.nickName} readOnly />
       </FormControl>
       <FormControl>
         <FormLabel>email</FormLabel>

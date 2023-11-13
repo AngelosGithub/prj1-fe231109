@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Flex,
+  flexbox,
   FormControl,
   FormLabel,
   Input,
@@ -25,7 +26,10 @@ export function MemberEdit() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
+  const [nickName, setNickName] = useState("");
+
   const [emailAvailable, setEmailAvailable] = useState(false);
+  const [nickNameAvailable, setNickNameAvailable] = useState(false);
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -43,13 +47,19 @@ export function MemberEdit() {
 
   // 기존 이메일과 같은지 확인하는 변수
   let sameOriginEmail = false;
+  let sameNickName = false;
 
   if (member !== null) {
     sameOriginEmail = member.email === email;
   }
 
-  // TODO 기존 이메이일과 같거나 중복확인을 했거나
+  if (member !== null) {
+    sameNickName = member.nickName === nickName;
+  }
+
+  // TODO 기존 이메일과 같거나 중복확인을 했거나
   let emailChecked = sameOriginEmail || emailAvailable;
+  let nickNameChecked = sameNickName || nickNameAvailable;
 
   // 암호가 없으면 기존, 암호를 작성하면 암호 확인 체크
   let passwordChecked = false;
@@ -84,6 +94,30 @@ export function MemberEdit() {
           setEmailAvailable(true);
           toast({
             description: "사용 가능한 email입니다.",
+            status: "success",
+          });
+        }
+      });
+  }
+
+  function handleNickNameCheck() {
+    const params = new URLSearchParams();
+    params.set("nickName", nickName);
+
+    axios
+      .get("/api/member/check?" + params)
+      .then(() => {
+        setNickNameAvailable(false);
+        toast({
+          description: "이미 사용 중인 nickName입니다.",
+          status: "warning",
+        });
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          setNickNameAvailable(true);
+          toast({
+            description: "사용 가능한 nickName입니다.",
             status: "success",
           });
         }
@@ -141,6 +175,23 @@ export function MemberEdit() {
           />
         </FormControl>
       )}
+
+      <FormControl>
+        <FormLabel>NickName</FormLabel>
+        <Flex>
+          <Input
+            type="nickName"
+            value={nickName}
+            onChange={(e) => {
+              setNickName(e.target.value);
+              setNickNameAvailable(false);
+            }}
+          />
+          <Button isDisabled={nickNameChecked} onClick={handleNickNameCheck}>
+            중복확인
+          </Button>
+        </Flex>
+      </FormControl>
 
       {/* 이메일을 변경하면 중복확인 다시 하도록 (기존과 같으면 확인 X) */}
       <FormControl>

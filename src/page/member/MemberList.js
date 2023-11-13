@@ -44,7 +44,11 @@ export function MemberList() {
         </Thead>
         <Tbody>
           {list.map((member) => (
-            <Tr onClick={() => handleTRClick(member.id)} key={member.id}>
+            <Tr
+              _hover={{ cursor: "pointer" }}
+              onClick={() => handleTRClick(member.id)}
+              key={member.id}
+            >
               <Td>{member.id}</Td>
               <Td>{member.password}</Td>
               <Td>{member.email}</Td>

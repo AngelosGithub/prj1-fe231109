@@ -15,6 +15,8 @@ import {
 export function MemberEdit() {
   const [member, setMember] = useState(null);
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
   const [emailAvailable, setEmailAvailable] = useState(false);
 
   const toast = useToast();
@@ -39,6 +41,16 @@ export function MemberEdit() {
 
   // TODO 기존 이메이일과 같거나 중복확인을 했거나
   let emailChecked = sameOriginEmail || emailAvailable;
+  // 암호가 없으면 기존, 암호를 작성하면 암호 확인 체크
+  let passwordChecked = false;
+
+  if (passwordChecked === password) {
+    passwordChecked = true;
+  }
+
+  if (password.length === 0) {
+    passwordChecked = true;
+  }
 
   if (member === null) {
     return <Spinner />;
@@ -73,8 +85,23 @@ export function MemberEdit() {
       <h1>{id}님 정보수정</h1>
       <FormControl>
         <FormLabel>password</FormLabel>
-        <Input type="text" />
+        <Input
+          type="text"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </FormControl>
+
+      {password.length > 0 && (
+        <FormControl>
+          <FormLabel>password 확인</FormLabel>
+          <Input
+            type="text"
+            value={passwordCheck}
+            onChange={(e) => setPasswordCheck(e.target.value)}
+          />
+        </FormControl>
+      )}
 
       {/* 이메일을 변경하면 중복확인 다시 하도록 (기존과 같으면 확인 X) */}
       <FormControl>
@@ -93,6 +120,12 @@ export function MemberEdit() {
           </Button>
         </Flex>
       </FormControl>
+      <Button
+        isDisabled={!emailChecked || !passwordChecked}
+        colorScheme="green"
+      >
+        수정
+      </Button>
     </Box>
   );
 }

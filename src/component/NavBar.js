@@ -1,4 +1,4 @@
-import { Button, Flex, theme, useConst, useToast } from "@chakra-ui/react";
+import { Button, Flex, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext } from "react";
@@ -26,11 +26,19 @@ export function NavBar() {
   return (
     <Flex>
       <Button onClick={() => navigate("/")}>home</Button>
-      <Button onClick={() => navigate("/write")}>write</Button>
-      <Button onClick={() => navigate("/signup")}>signup</Button>
-      <Button onClick={() => navigate("/member/list")}>회원목록</Button>
-      <Button onClick={() => navigate("/login")}>Login</Button>
-      <Button onClick={handleLogout}>Logout</Button>
+      {isAuthenticated && (
+        <Button onClick={() => navigate("/write")}>write</Button>
+      )}
+      {isAuthenticated || (
+        <Button onClick={() => navigate("/signup")}>signup</Button>
+      )}
+      {isAuthenticated && (
+        <Button onClick={() => navigate("/member/list")}>회원목록</Button>
+      )}
+      {isAuthenticated || (
+        <Button onClick={() => navigate("/login")}>Login</Button>
+      )}
+      {isAuthenticated && <Button onClick={handleLogout}>Logout</Button>}
     </Flex>
   );
 }

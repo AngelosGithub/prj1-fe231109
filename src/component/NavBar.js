@@ -2,7 +2,7 @@ import { Button, Flex, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext } from "react";
-import { LoginContext } from "../App";
+import { LoginContext } from "./LoginProvider";
 
 export function NavBar() {
   // 세션이 서버에 있기때문에 클라이언트에서 사용하기 위해 쓰는 코드

@@ -81,17 +81,16 @@ export function BoardView() {
         <Input value={board.inserted} readOnly />
       </FormControl>
 
-      {hasAccess(board.writer) ||
-        (isAdmin() && (
-          <Box>
-            <Button colorScheme="green" onClick={() => navigate("/edit/" + id)}>
-              수정
-            </Button>
-            <Button colorScheme="red" onClick={onOpen}>
-              삭제
-            </Button>
-          </Box>
-        ))}
+      {(hasAccess(board.writer) || isAdmin()) && (
+        <Box>
+          <Button colorScheme="green" onClick={() => navigate("/edit/" + id)}>
+            수정
+          </Button>
+          <Button colorScheme="red" onClick={onOpen}>
+            삭제
+          </Button>
+        </Box>
+      )}
 
       {/* 삭제 모달 */}
       <Modal isOpen={isOpen} onClose={onClose}>

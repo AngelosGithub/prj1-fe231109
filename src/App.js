@@ -51,10 +51,23 @@ function App(props) {
     return login !== "";
   }
 
+  function isAdmin() {
+    if (login.auth) {
+      return login.auth.some((elem) => elem.name === "admin");
+    }
+    return false;
+  }
+
+  function hasAccess(userId) {
+    return login.id === userId;
+  }
+
   console.log(login);
 
   return (
-    <LoginContext.Provider value={{ login, fetchLogin, isAuthenticated }}>
+    <LoginContext.Provider
+      value={{ login, fetchLogin, isAuthenticated, hasAccess, isAdmin }}
+    >
       <RouterProvider router={routes} />;
     </LoginContext.Provider>
   );

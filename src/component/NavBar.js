@@ -6,7 +6,8 @@ import { LoginContext } from "../App";
 
 export function NavBar() {
   // 세션이 서버에 있기때문에 클라이언트에서 사용하기 위해 쓰는 코드
-  const { fetchLogin, login, isAuthenticated } = useContext(LoginContext);
+  const { fetchLogin, login, isAuthenticated, isAdmin } =
+    useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -26,19 +27,19 @@ export function NavBar() {
   return (
     <Flex>
       <Button onClick={() => navigate("/")}>home</Button>
-      {isAuthenticated && (
+      {isAuthenticated() && (
         <Button onClick={() => navigate("/write")}>write</Button>
       )}
-      {isAuthenticated || (
+      {isAuthenticated() || (
         <Button onClick={() => navigate("/signup")}>signup</Button>
       )}
-      {isAuthenticated && (
+      {isAdmin() && (
         <Button onClick={() => navigate("/member/list")}>회원목록</Button>
       )}
-      {isAuthenticated || (
+      {isAuthenticated() || (
         <Button onClick={() => navigate("/login")}>Login</Button>
       )}
-      {isAuthenticated && <Button onClick={handleLogout}>Logout</Button>}
+      {isAuthenticated() && <Button onClick={handleLogout}>Logout</Button>}
     </Flex>
   );
 }

@@ -20,8 +20,9 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DeleteIcon } from "@chakra-ui/icons";
+import { LoginContext } from "./LoginProvider";
 
 function CommentForm({ boardId, isSubmitting, onSubmit }) {
   const [comment, setComment] = useState("");
@@ -41,6 +42,8 @@ function CommentForm({ boardId, isSubmitting, onSubmit }) {
 }
 
 function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
+  const { hasAccess } = useContext(LoginContext);
+
   return (
     <Card>
       <CardHeader>
@@ -63,14 +66,16 @@ function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
                   >
                     {comment.comment}
                   </Text>
-                  <Button
-                    isDisabled={isSubmitting}
-                    onClick={() => onDeleteModalOpen(comment.id)}
-                    size={"xs"}
-                    colorScheme="red"
-                  >
-                    <DeleteIcon />
-                  </Button>
+                  {hasAccess(comment.memberId) && (
+                    <Button
+                      isDisabled={isSubmitting}
+                      onClick={() => onDeleteModalOpen(comment.id)}
+                      size={"xs"}
+                      colorScheme="red"
+                    >
+                      <DeleteIcon />
+                    </Button>
+                  )}
                 </Flex>
               </Box>
             ))}
@@ -87,6 +92,8 @@ export function CommentContainer({ boardId }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const { isAuthenticated } = useContext(LoginContext);
 
   useEffect(() => {
     if (!isSubmitting) {
@@ -127,11 +134,13 @@ export function CommentContainer({ boardId }) {
       <Text mt={"10px"} fontSize={"lg"} fontWeight={"bold"}>
         댓글 작성
       </Text>
-      <CommentForm
-        boardId={boardId}
-        isSubmitting={isSubmitting}
-        onSubmit={handleSubmit}
-      />
+      {isAuthenticated() && (
+        <CommentForm
+          boardId={boardId}
+          isSubmitting={isSubmitting}
+          onSubmit={handleSubmit}
+        />
+      )}
       <CommentList
         boardId={boardId}
         isSubmitting={isSubmitting}

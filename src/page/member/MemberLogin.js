@@ -34,9 +34,6 @@ export function MemberLogin() {
           description: "로그인 정보를 다시 확인해주세요",
           status: "warning",
         });
-      })
-      .finally(() => {
-        fetchLogin();
       });
   }
 

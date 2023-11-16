@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -18,11 +18,14 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { LoginContext } from "../../component/LoginProvider";
 
 export function MemberView() {
   const [member, setMember] = useState(null);
   // /member?id=userid
   const [params] = useSearchParams();
+
+  const { fetchLogin } = useContext(LoginContext);
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 

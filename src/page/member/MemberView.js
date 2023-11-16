@@ -25,8 +25,6 @@ export function MemberView() {
   // /member?id=userid
   const [params] = useSearchParams();
 
-  const { fetchLogin } = useContext(LoginContext);
-
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const navigate = useNavigate();

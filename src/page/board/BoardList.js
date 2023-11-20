@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
+  Button,
+  Flex,
+  Input,
   Spinner,
   Table,
   Tbody,
@@ -11,6 +14,26 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+function SearchComponent() {
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
+
+  function handleSearch() {
+    // /?key=keyword
+    const params = new URLSearchParams();
+    params.set("key", keyword);
+
+    navigate("/?" + params);
+  }
+
+  return (
+    <Flex>
+      <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+      <Button onClick={handleSearch}>검색</Button>
+    </Flex>
+  );
+}
 
 export function BoardList() {
   const [boardList, setBoardList] = useState(null);
@@ -58,6 +81,8 @@ export function BoardList() {
           </Tbody>
         </Table>
       </Box>
+
+      <SearchComponent />
     </Box>
   );
 }
